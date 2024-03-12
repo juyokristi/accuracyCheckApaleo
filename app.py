@@ -93,11 +93,17 @@ if st.button('Generate Report', key='generate_report_button'):
         # Sort the DataFrame by the 'businessDay' column to ensure data is ordered by date
         df = df.sort_values(by='businessDay')
 
+        # Modify here for custom file name
+        today_date = datetime.now().strftime('%Y-%m-%d')  # Today's date in YYYY-MM-DD format
+        formatted_from_date = from_date.strftime('%Y-%m-%d')  # Format the from_date
+        formatted_to_date = to_date.strftime('%Y-%m-%d')  # Format the to_date
+        custom_file_name = f"{property_id}_{formatted_from_date}_to_{formatted_to_date}_{today_date}.csv"
+
         # Convert the sorted DataFrame to CSV
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="Download report as CSV",
             data=csv,
-            file_name='property_performance_report.csv',
+            file_name=custom_file_name,
             mime='text/csv',
         )
